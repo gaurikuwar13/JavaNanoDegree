@@ -4,7 +4,7 @@ public void test(){
     public static void vowelOnly(String text)  {
        int count = 0;
        StringBuilder stringBuilder = new StringBuilder();
-       Pattern pattern = Pattern.compile("[aeiou]");
+       Pattern pattern = Pattern.compile("(?i)[aeiou]");
        Matcher matcher = pattern.matcher(text);
        while(matcher.find()){
            System.out.println("The vowel is :"+ matcher.group());
