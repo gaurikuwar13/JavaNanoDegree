@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE")
+        classpath('org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7')
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'idea'
+    id "com.energizedwork.idea-base" version "1.4"
+    id "com.github.johnrengelman.shadow" version "4.0.4"
+
+}
+ext['selenium.version'] = '3.141.59'
+ext['junit-jupiter.version']   = '5.5.2'
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+    baseName = 'junit5-spring-boot-example'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenLocal()
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url 'http://mvnrepository.com/maven2' }
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    implementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module: 'commons-logging')
+        // exclude(group: 'junit', module: 'junit')
+    }
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    implementation ('org.springframework.boot:spring-boot-starter-log4j2') {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    }
+
+    implementation "org.assertj:assertj-core:3.13.2"
+    implementation "org.junit.jupiter:junit-jupiter:5.5.2"
+    // implementation 'org.junit.platform:junit-platform-launcher:1.5.1'
+    implementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
+//    implementation 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    // implementation 'org.junit.platform:junit-platform-runner:1.5.1'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
