@@ -1,8 +1,12 @@
 package com.example.springbootthymeleaf.controller;
 
+import com.example.springbootthymeleaf.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -22,5 +26,16 @@ public class UserController {
         else if (grade<=75 && grade >70) return "C";
         else if (grade<=70 && grade >60) return "D";
         else return "F";
+   }
+
+   @RequestMapping("demo2")
+    public String demo2(Model model) {
+       List<User> studentList = new ArrayList<>();
+       studentList.add(new User(1,"Mayank",7));
+       studentList.add(new User(2,"Aarya",5));
+       studentList.add(new User(3,"Akshara",2));
+       studentList.add(new User(4,"Prisha",2));
+       model.addAttribute("list",studentList);
+       return "demo2";
    }
 }
